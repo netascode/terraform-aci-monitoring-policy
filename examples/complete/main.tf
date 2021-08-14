@@ -1,7 +1,6 @@
-module "aci_scaffolding" {
-  source = "netascode/scaffolding/aci"
+module "aci_monitoring_policy" {
+  source = "netascode/monitoring-policy/aci"
 
-  name        = "ABC"
-  alias       = "ABC-ALIAS"
-  description = "My Description"
+  snmp_policy_name   = "SNMP1"
+  syslog_policy_name = "SYSLOG1"
 }

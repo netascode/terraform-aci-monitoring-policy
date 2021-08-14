@@ -14,35 +14,76 @@ terraform {
 module "main" {
   source = "../.."
 
-  name        = "ABC"
-  alias       = "ALIAS"
-  description = "DESCR"
+  snmp_policy_name   = "SNMP1"
+  syslog_policy_name = "SYSLOG1"
 }
 
-data "aci_rest" "fvTenant" {
-  dn = "uni/tn-ABC"
+data "aci_rest" "snmpSrc" {
+  dn = "uni/fabric/moncommon/snmpsrc-SNMP1"
 
   depends_on = [module.main]
 }
 
-resource "test_assertions" "fvTenant" {
-  component = "fvTenant"
+resource "test_assertions" "snmpSrc" {
+  component = "snmpSrc"
 
   equal "name" {
     description = "name"
-    got         = data.aci_rest.fvTenant.content.name
-    want        = "ABC"
+    got         = data.aci_rest.snmpSrc.content.name
+    want        = "SNMP1"
+  }
+}
+
+data "aci_rest" "snmpRsDestGroup" {
+  dn = "${data.aci_rest.snmpSrc.id}/rsdestGroup"
+
+  depends_on = [module.main]
+}
+
+resource "test_assertions" "snmpRsDestGroup" {
+  component = "snmpRsDestGroup"
+
+  equal "tDn" {
+    description = "tDn"
+    got         = data.aci_rest.snmpRsDestGroup.content.tDn
+    want        = "uni/fabric/snmpgroup-SNMP1"
+  }
+}
+
+data "aci_rest" "syslogSrc" {
+  dn = "uni/fabric/moncommon/slsrc-SYSLOG1"
+
+  depends_on = [module.main]
+}
+
+resource "test_assertions" "syslogSrc" {
+  component = "syslogSrc"
+
+  equal "name" {
+    description = "name"
+    got         = data.aci_rest.syslogSrc.content.name
+    want        = "SYSLOG1"
   }
 
-  equal "nameAlias" {
-    description = "nameAlias"
-    got         = data.aci_rest.fvTenant.content.nameAlias
-    want        = "ALIAS"
+  equal "incl" {
+    description = "incl"
+    got         = data.aci_rest.syslogSrc.content.incl
+    want        = "audit,events,faults"
   }
+}
 
-  equal "descr" {
-    description = "descr"
-    got         = data.aci_rest.fvTenant.content.descr
-    want        = "DESCR"
+data "aci_rest" "syslogRsDestGroup" {
+  dn = "${data.aci_rest.syslogSrc.id}/rsdestGroup"
+
+  depends_on = [module.main]
+}
+
+resource "test_assertions" "syslogRsDestGroup" {
+  component = "syslogRsDestGroup"
+
+  equal "tDn" {
+    description = "tDn"
+    got         = data.aci_rest.syslogRsDestGroup.content.tDn
+    want        = "uni/fabric/slgroup-SYSLOG1"
   }
 }

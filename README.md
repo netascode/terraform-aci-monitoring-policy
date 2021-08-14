@@ -1,22 +1,21 @@
 <!-- BEGIN_TF_DOCS -->
-[![Tests](https://github.com/netascode/terraform-aci-scaffolding/actions/workflows/test.yml/badge.svg)](https://github.com/netascode/terraform-aci-scaffolding/actions/workflows/test.yml)
+[![Tests](https://github.com/netascode/terraform-aci-monitoring-policy/actions/workflows/test.yml/badge.svg)](https://github.com/netascode/terraform-aci-monitoring-policy/actions/workflows/test.yml)
 
-# Terraform ACI Scaffolding Module
+# Terraform ACI Monitoring Policy Module
 
-Description
+Manages ACI Monitoring Policy
 
 Location in GUI:
-`Tenants` » `XXX`
+`Fabric` » `Fabric Policies` » `Policies` » `Monitoring` » `Common Policy`
 
 ## Examples
 
 ```hcl
-module "aci_scaffolding" {
-  source = "netascode/scaffolding/aci"
+module "aci_monitoring_policy" {
+  source = "netascode/monitoring-policy/aci"
 
-  name        = "ABC"
-  alias       = "ABC-ALIAS"
-  description = "My Description"
+  snmp_policy_name   = "SNMP1"
+  syslog_policy_name = "SYSLOG1"
 }
 
 ```
@@ -38,20 +37,19 @@ module "aci_scaffolding" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_name"></a> [name](#input\_name) | Tenant name. | `string` | n/a | yes |
-| <a name="input_alias"></a> [alias](#input\_alias) | Tenant alias. | `string` | `""` | no |
-| <a name="input_description"></a> [description](#input\_description) | Tenant description. | `string` | `""` | no |
+| <a name="input_snmp_policy_name"></a> [snmp\_policy\_name](#input\_snmp\_policy\_name) | SNMP policy name. | `string` | `""` | no |
+| <a name="input_syslog_policy_name"></a> [syslog\_policy\_name](#input\_syslog\_policy\_name) | Syslog policy name. | `string` | `""` | no |
 
 ## Outputs
 
-| Name | Description |
-|------|-------------|
-| <a name="output_dn"></a> [dn](#output\_dn) | Distinguished name of `fvTenant` object. |
-| <a name="output_name"></a> [name](#output\_name) | Tenant name. |
+No outputs.
 
 ## Resources
 
 | Name | Type |
 |------|------|
-| [aci_rest.fvTenant](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
+| [aci_rest.snmpRsDestGroup](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
+| [aci_rest.snmpSrc](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
+| [aci_rest.syslogRsDestGroup](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
+| [aci_rest.syslogSrc](https://registry.terraform.io/providers/netascode/aci/latest/docs/resources/rest) | resource |
 <!-- END_TF_DOCS -->
