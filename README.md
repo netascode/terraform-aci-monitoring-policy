@@ -12,10 +12,11 @@ Location in GUI:
 
 ```hcl
 module "aci_monitoring_policy" {
-  source = "netascode/monitoring-policy/aci"
+  source  = "netascode/monitoring-policy/aci"
+  version = ">= 0.0.2"
 
-  snmp_policy_name   = "SNMP1"
-  syslog_policy_name = "SYSLOG1"
+  snmp_trap_policy = "SNMP1"
+  syslog_policy    = "SYSLOG1"
 }
 
 ```
@@ -37,8 +38,8 @@ module "aci_monitoring_policy" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_snmp_policy_name"></a> [snmp\_policy\_name](#input\_snmp\_policy\_name) | SNMP policy name. | `string` | `""` | no |
-| <a name="input_syslog_policy_name"></a> [syslog\_policy\_name](#input\_syslog\_policy\_name) | Syslog policy name. | `string` | `""` | no |
+| <a name="input_snmp_trap_policy"></a> [snmp\_trap\_policy](#input\_snmp\_trap\_policy) | SNMP trap policy name. | `string` | `""` | no |
+| <a name="input_syslog_policy"></a> [syslog\_policy](#input\_syslog\_policy) | Syslog policy name. | `string` | `""` | no |
 
 ## Outputs
 

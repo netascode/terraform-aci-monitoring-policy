@@ -14,8 +14,8 @@ terraform {
 module "main" {
   source = "../.."
 
-  snmp_policy_name   = "SNMP1"
-  syslog_policy_name = "SYSLOG1"
+  snmp_trap_policy = "SNMP1"
+  syslog_policy    = "SYSLOG1"
 }
 
 data "aci_rest" "snmpSrc" {

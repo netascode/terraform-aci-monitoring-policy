@@ -13,10 +13,11 @@ Note that this example will create resources. Resources can be destroyed with `t
 
 ```hcl
 module "aci_monitoring_policy" {
-  source = "netascode/monitoring-policy/aci"
+  source  = "netascode/monitoring-policy/aci"
+  version = ">= 0.0.2"
 
-  snmp_policy_name   = "SNMP1"
-  syslog_policy_name = "SYSLOG1"
+  snmp_trap_policy = "SNMP1"
+  syslog_policy    = "SYSLOG1"
 }
 
 ```
