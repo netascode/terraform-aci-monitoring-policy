@@ -1,3 +1,7 @@
+## 0.0.3
+
+- BREAKING CHANGE: change snmp_trap_policy and syslog_policy variables to lists
+
 ## 0.0.2
 
 - BREAKING CHANGE: rename snmp_policy_name variable to snmp_trap_policy
