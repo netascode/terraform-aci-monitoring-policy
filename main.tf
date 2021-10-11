@@ -9,7 +9,7 @@ resource "aci_rest" "snmpSrc" {
 
 resource "aci_rest" "snmpRsDestGroup" {
   for_each   = toset(var.snmp_trap_policies)
-  dn         = "${aci_rest.snmpSrc[each.value].id}/rsdestGroup"
+  dn         = "${aci_rest.snmpSrc[each.value].dn}/rsdestGroup"
   class_name = "snmpRsDestGroup"
   content = {
     tDn = "uni/fabric/snmpgroup-${each.value}"
@@ -28,7 +28,7 @@ resource "aci_rest" "syslogSrc" {
 
 resource "aci_rest" "syslogRsDestGroup" {
   for_each   = toset(var.syslog_policies)
-  dn         = "${aci_rest.syslogSrc[each.value].id}/rsdestGroup"
+  dn         = "${aci_rest.syslogSrc[each.value].dn}/rsdestGroup"
   class_name = "syslogRsDestGroup"
   content = {
     tDn = "uni/fabric/slgroup-${each.value}"
