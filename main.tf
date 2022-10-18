@@ -17,20 +17,21 @@ resource "aci_rest_managed" "snmpRsDestGroup" {
 }
 
 resource "aci_rest_managed" "syslogSrc" {
-  for_each   = toset(var.syslog_policies)
-  dn         = "uni/fabric/moncommon/slsrc-${each.value}"
+  for_each   = { for s in var.syslog_policies : s.name => s }
+  dn         = "uni/fabric/moncommon/slsrc-${each.value.name}"
   class_name = "syslogSrc"
   content = {
-    name = each.value
-    incl = "audit,events,faults"
+    name   = each.value.name
+    incl   = join(",", concat(each.value.audit == true ? ["audit"] : [], each.value.events == true ? ["events"] : [], each.value.faults == true ? ["faults"] : [], each.value.session == true ? ["session"] : []))
+    minSev = each.value.minimum_severity
   }
 }
 
 resource "aci_rest_managed" "syslogRsDestGroup" {
-  for_each   = toset(var.syslog_policies)
-  dn         = "${aci_rest_managed.syslogSrc[each.value].dn}/rsdestGroup"
+  for_each   = { for s in var.syslog_policies : s.name => s }
+  dn         = "${aci_rest_managed.syslogSrc[each.value.name].dn}/rsdestGroup"
   class_name = "syslogRsDestGroup"
   content = {
-    tDn = "uni/fabric/slgroup-${each.value}"
+    tDn = "uni/fabric/slgroup-${each.value.name}"
   }
 }

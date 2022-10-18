@@ -14,10 +14,17 @@ Note that this example will create resources. Resources can be destroyed with `t
 ```hcl
 module "aci_monitoring_policy" {
   source  = "netascode/monitoring-policy/aci"
-  version = ">= 0.1.0"
+  version = ">= 0.2.0"
 
   snmp_trap_policies = ["SNMP1"]
-  syslog_policies    = ["SYSLOG1"]
+  syslog_policies = [{
+    name             = "SYSLOG1"
+    audit            = false
+    events           = false
+    faults           = false
+    session          = true
+    minimum_severity = "alerts"
+  }]
 }
 ```
 <!-- END_TF_DOCS -->

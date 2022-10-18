@@ -1,5 +1,5 @@
 terraform {
-  required_version = ">= 1.0.0"
+  required_version = ">= 1.3.0"
 
   required_providers {
     test = {
@@ -17,7 +17,14 @@ module "main" {
   source = "../.."
 
   snmp_trap_policies = ["SNMP1"]
-  syslog_policies    = ["SYSLOG1"]
+  syslog_policies = [{
+    name             = "SYSLOG1"
+    audit            = false
+    events           = false
+    faults           = false
+    session          = true
+    minimum_severity = "alerts"
+  }]
 }
 
 data "aci_rest_managed" "snmpSrc" {
@@ -70,7 +77,13 @@ resource "test_assertions" "syslogSrc" {
   equal "incl" {
     description = "incl"
     got         = data.aci_rest_managed.syslogSrc.content.incl
-    want        = "audit,events,faults"
+    want        = "session"
+  }
+
+  equal "minSev" {
+    description = "minSev"
+    got         = data.aci_rest_managed.syslogSrc.content.minSev
+    want        = "alerts"
   }
 }
 

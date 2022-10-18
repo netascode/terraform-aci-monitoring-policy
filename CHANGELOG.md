@@ -1,3 +1,7 @@
+## 0.2.0 (unreleased)
+
+- BREAKING CHANGE: Refactor `syslog_policies` to include flags and `minimum_severity`
+
 ## 0.1.0
 
 - Migrate to devnet provider
