@@ -1,4 +1,4 @@
-## 0.2.0 (unreleased)
+## 0.2.0
 
 - BREAKING CHANGE: Refactor `syslog_policies` to include flags and `minimum_severity`
 
