@@ -1,3 +1,7 @@
+## 0.2.1 (unreleased)
+
+- Add `all` flag to `syslogSrc` attribute in case all flags are enabled
+
 ## 0.2.0
 
 - BREAKING CHANGE: Refactor `syslog_policies` to include flags and `minimum_severity`

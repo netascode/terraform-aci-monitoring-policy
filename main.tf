@@ -22,7 +22,7 @@ resource "aci_rest_managed" "syslogSrc" {
   class_name = "syslogSrc"
   content = {
     name   = each.value.name
-    incl   = join(",", concat(each.value.audit == true ? ["audit"] : [], each.value.events == true ? ["events"] : [], each.value.faults == true ? ["faults"] : [], each.value.session == true ? ["session"] : []))
+    incl   = join(",", concat(each.value.audit == true && each.value.events == true && each.value.faults == true && each.value.session == true ? ["all"] : [], each.value.audit == true ? ["audit"] : [], each.value.events == true ? ["events"] : [], each.value.faults == true ? ["faults"] : [], each.value.session == true ? ["session"] : []))
     minSev = each.value.minimum_severity
   }
 }
